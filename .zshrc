@@ -57,7 +57,7 @@ zplug "so-fancy/diff-so-fancy", as:command, use:"third_party/build_fatpack/diff-
 zplug "sharkdp/bat", as:command, from:gh-r, use:"*x86_64*linux-gnu*"
 zplug "denilsonsa/prettyping", as:command, use:"prettyping"
 zplug "dbrgn/tealdeer", as:command, from:gh-r, use:"*x86_64*", rename-to:tldr
-zplug "cjbassi/gotop", as:command, from:gh-r, use:"*linux_amd64*"
+zplug "cjbassi/gotop", as:command, from:gh-r, use:"*linux_amd64.tgz"
 zplug "akavel/up", as:command, from:gh-r, use:"*up"
 
 
