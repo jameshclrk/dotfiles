@@ -25,6 +25,11 @@ Plug 'terryma/vim-multiple-cursors'
 "
 
 Plug 'w0rp/ale'
+let g:ale_fixers = {
+  \   '*': ['remove_trailing_lines', 'trim_whitespace'],
+  \   'javascript': ['eslint'],
+  \   'python': ['black'],
+\}
 let g:ale_set_balloons = 1
 let g:ale_completion_enabled = 1
 set mouse=a
@@ -40,14 +45,6 @@ Plug 'sheerun/vim-polyglot'
 Plug 'fidian/hexmode'
 " CSV column highlighting
 Plug 'chrisbra/csv.vim'
-" Linting
-Plug 'w0rp/ale'
-let g:ale_fixers = {
-  \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-  \   'javascript': ['eslint'],
-  \   'python': ['black'],
-\}
-
 "
 " Misc
 "
@@ -110,8 +107,6 @@ if has("termguicolors")
   set termguicolors
 endif
 syntax on
-"set background=dark
-"let g:one_allow_italics = 1 " I love italic for comments
 colorscheme dracula
 " wsl nonsense
 set t_ut=
