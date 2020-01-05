@@ -80,7 +80,7 @@ setopt hist_ignore_all_dups
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=240
 
-alias ls='ls --color -lh --group-directories-first'
+alias ls='ls --color -lh --group-directories-first -N'
 
 # most instead of less
 if type most >/dev/null 2>&1; then
