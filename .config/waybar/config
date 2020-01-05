@@ -1,0 +1,53 @@
+{
+    "layer": "top", // Waybar at top layer
+    "height": 23,
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["sway/window"],
+    "modules-right": ["custom/spotify", "backlight", "pulseaudio", "network", "battery", "clock"],
+    "sway/workspaces": {
+        "all-outputs": true
+    },
+    "sway/window": {
+        "max-length": 50
+    },
+    "idle_inhibitor": {
+        "format": "{status}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+    "backlight": {
+    "device": "intel_backlight",
+    "format": "{percent}% {icon}",
+    "format-icons": ["", ""]
+    },
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-icons": ["", "", "", "", ""],
+        "disable-inotify": true
+    },
+    "network": {
+        // "interface": "wlp2s0", // (Optional) To force the use of this interface
+        "format-wifi": "{icon}",
+        "format-icons": ["","",""],
+        "format-ethernet": "{ifname} ",
+        "format-disconnected": "",
+        "on-click": "notify-send -t 5000 \"Wi-fi Details:\" \"$(iw dev wlp2s0 link | grep -e \"SSID\\|signal\" )\""
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-muted": " {volume}%",
+        "format-icons": {
+            "headphones": "",
+            "handsfree": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "on-click": "pactl set-sink-mute alsa_output.pci-0000_00_1f.3.analog-stereo toggle"
+    }
+}

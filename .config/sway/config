@@ -1,0 +1,150 @@
+### Variables
+set $mod Mod4
+set $term tilix
+set $menu rofi -show drun
+
+### Output configuration
+#
+# Default wallpaper (more resolutions are available in __DATADIR__/backgrounds/sway/)
+output * bg /usr/share/backgrounds/f29/default/normalish/f29.png fill
+default_border pixel 1
+gaps outer 5
+gaps inner 5
+hide_edge_borders smart
+smart_gaps on
+
+### Input configuration
+input "1739:30383:DELL07E6:00_06CB:76AF_Touchpad" {
+    dwt enabled
+    tap enabled
+    natural_scroll enabled
+    middle_emulation enabled
+}
+
+input "1:1:AT_Translated_Set_2_keyboard" {
+    xkb_layout gb
+}
+
+### Key binding"
+# Open a terminal
+bindsym $mod+Return exec $term
+# Kill focussed windows
+bindsym $mod+Shift+q kill
+# Run menu
+bindsym $mod+Space exec $menu
+# Floating modified
+floating_modifier $mod inverse
+# Reload config
+bindsym $mod+Shift+c reload
+# Exit
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+# Change focus
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move windows
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# Split verical or horizontal
+bindsym $mod+b splith
+bindsym $mod+v splitv
+
+# Switch the current container between different layout styles
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Make the current focus fullscreen
+bindsym $mod+f fullscreen
+
+# Toggle the current focus between tiling and floating mode
+bindsym $mod+Shift+space floating toggle
+
+# Swap focus between the tiling area and the floating area
+#bindsym $mod+space focus mode_toggle
+
+# move focus to the parent container
+bindsym $mod+a focus parent
+
+# Sway has a "scratchpad", which is a bag of holding for windows.
+# You can send windows there and get them back later.
+
+# Move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+#
+# Resizing containers:
+#
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+#  Audio
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
+# Brightness
+bindsym XF86MonBrightnessUp exec light -A 2
+bindsym XF86MonBrightnessDown exec light -U 2
+
+#Screenshot
+bindsym Print exec grim "/home/jc/screenshot_`date +%Y-%m-%d-%T`.png"
+bindsym Shift+Print exec slurp | grim -g - "/home/jc/screenshot_`date +%Y-%m-%d-%T`.png"
+
+# Locking
+bindsym $mod+l exec $HOME/.local/bin/lock.sh
+
+exec_always $HOME/.config/waybar/waybar.sh
+exec mako --default-timeout 10000
+#exec $HOME/.local/bin/redshift -b 1.0:0.75 -t 6500:3000 -m wayland -l 32.7767:-96.7970
+exec redshift -b 1.0:0.75 -t 6500:3000 -m wayland -l 53.4808:-2.2426
+
+include /etc/sway/config.d/*

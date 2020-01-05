@@ -1,0 +1,9 @@
+configuration {
+	modi: "run,drun";
+	width: 25;
+	lines: 1;
+	columns: 1;
+	font: "sans 12";
+	terminal: "tilix";
+	theme: "oxide";
+}

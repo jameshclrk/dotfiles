@@ -1,0 +1,11 @@
+font="sans 12"
+background-color=#1E1F29DE
+text-color=#cfd6e6
+border-size=0
+format=<b>%s</b>\n%b
+layer=overlay
+width=400
+margin=10,20,5
+padding=5,10,5
+border-radius=5
+icons=1
