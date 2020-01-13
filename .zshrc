@@ -91,10 +91,8 @@ if type vim >/dev/null 2>&1; then
 fi
 
 # Go
-if type go >/dev/null 2>&1; then
-    if [[ -d /usr/local/go ]]; then
-        export PATH=/usr/local/go/bin:$PATH
-    fi
+if [[ -d /usr/local/go ]]; then
+    export PATH=/usr/local/go/bin:$PATH
     export PATH=$HOME/go/bin:$PATH
 fi
 
