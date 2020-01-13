@@ -11,8 +11,6 @@ fi
 # Windows BS
 if [[ -f /proc/version ]]; then
     if grep --quiet Microsoft /proc/version; then
-        # Workaround for niceness in builds < 17738
-        unsetopt BG_NICE
         # From agross/dotfiles@83b572
         if [[ "$(umask)" == '000' ]]; then
             umask 022
