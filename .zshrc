@@ -91,7 +91,33 @@ setopt hist_ignore_all_dups
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=240
 
-alias ls='ls --color -lh --group-directories-first -N'
+if type exa >/dev/null 2>&1; then
+    alias ls="exa --long --git --group-directories-first"
+else
+    alias ls='ls --color -lh --group-directories-first -N'
+fi
+
+if type bat >/dev/null 2>&1; then
+    alias preview="fd -E 'go' -E 'old_machine' -E .git --type f | fzf --preview 'bat --plain --color=always {}'"
+fi
+
+if type fd >/dev/null 2>&1; then
+    export FZF_DEFAULT_COMMAND="fd --type f --exclude .git"
+fi
+
+# cdd - cd to selected directory
+cdd() {
+    local dir
+    dir=$(find * -maxdepth 0 -type d -print 2> /dev/null | fzf +m) \
+        && cd "$dir"
+}
+
+# cdf - cd into the directory of the selected file
+cdf() {
+    local file
+    local dir
+    file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
+}
 
 # most instead of less
 if type most >/dev/null 2>&1; then
