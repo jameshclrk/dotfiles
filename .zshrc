@@ -49,15 +49,28 @@ zplug "lib/completion", from:oh-my-zsh
 zplug "lib/key-bindings", from:oh-my-zsh
 
 # scripts
+# cli fuzzy finder
 zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf
-zplug "Cyan4973/xxHash", hook-build:"PREFIX=$ZPLUG_HOME make install"
+# better diff interface
 zplug "so-fancy/diff-so-fancy", as:command, use:"third_party/build_fatpack/diff-so-fancy"
-zplug "sharkdp/bat", as:command, from:gh-r, use:"*x86_64*linux-gnu*"
+# ping interface
 zplug "denilsonsa/prettyping", as:command, use:"prettyping"
+# tldr for man pages
 zplug "dbrgn/tealdeer", as:command, from:gh-r, use:"*x86_64*", rename-to:tldr
+# system monitor
 zplug "cjbassi/gotop", as:command, from:gh-r, use:"*linux_amd64.tgz"
+# Ultimate Plumber
 zplug "akavel/up", as:command, from:gh-r, use:"*up"
-
+# ls alternative
+zplug "ogham/exa", as:command, from:gh-r, use:"*linux-x86_64*"
+# find alternative
+zplug "sharkdp/fd", as:command, from:gh-r, use:"*x86_64-unknown-linux-musl*"
+# cat alternative
+zplug "sharkdp/bat", as:command, from:gh-r, use:"*x86_64*linux-gnu*"
+# grep alternative
+zplug "BurntSushi/ripgrep", as:command, from:gh-r, use:"*x86_64*linux*"
+# CSV cli toolkit
+zplug "BurntSushi/xsv", as:command, from:gh-r, use:"*x86_64-unknown-linux*"
 
 # Install plugins that are not installed
 if ! zplug check --verbose; then
