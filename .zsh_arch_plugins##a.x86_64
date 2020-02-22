@@ -1,16 +1,16 @@
 # tldr for man pages
-zplug "dbrgn/tealdeer", as:command, from:gh-r, use:"*x86_64*", rename-to:tldr, if:"[ $(arch) == "x86_64" ]"
+zplug "dbrgn/tealdeer", as:command, from:gh-r, use:"*x86_64*", rename-to:tldr, if:"[[ $(uname -m) == "x86_64" ]]"
 # system monitor
-zplug "cjbassi/gotop", as:command, from:gh-r, use:"*linux_amd64.tgz", if:"[ $(arch) == "x86_64" ]"
+zplug "cjbassi/gotop", as:command, from:gh-r, use:"*linux_amd64.tgz", if:"[[ $(uname -m) == "x86_64" ]]"
 # Ultimate Plumber
-zplug "akavel/up", as:command, from:gh-r, use:"*up", if:"[ $(arch) == "x86_64" ]"
+zplug "akavel/up", as:command, from:gh-r, use:"*up", if:"[[ $(uname -m) == "x86_64" ]]"
 # ls alternative
-zplug "ogham/exa", as:command, from:gh-r, use:"*linux-x86_64*", if:"[ $(arch) == "x86_64" ]"
+zplug "ogham/exa", as:command, from:gh-r, use:"*linux-x86_64*", if:"[[ $(uname -m) == "x86_64" ]]"
 # find alternative
-zplug "sharkdp/fd", as:command, from:gh-r, use:"*x86_64-unknown-linux-musl*", if:"[ $(arch) == "x86_64" ]"
+zplug "sharkdp/fd", as:command, from:gh-r, use:"*x86_64-unknown-linux-musl*", if:"[[ $(uname -m) == "x86_64" ]]"
 # cat alternative
-zplug "sharkdp/bat", as:command, from:gh-r, use:"*x86_64*linux-gnu*", if:"[ $(arch) == "x86_64" ]"
+zplug "sharkdp/bat", as:command, from:gh-r, use:"*x86_64*linux-gnu*", if:"[[ $(uname -m) == "x86_64" ]]"
 # grep alternative
-zplug "BurntSushi/ripgrep", as:command, from:gh-r, use:"*x86_64*linux*", if:"[ $(arch) == "x86_64" ]"
+zplug "BurntSushi/ripgrep", as:command, from:gh-r, use:"*x86_64*linux*", if:"[[ $(uname -m) == "x86_64" ]]"
 # CSV cli toolkit
-zplug "BurntSushi/xsv", as:command, from:gh-r, use:"*x86_64-unknown-linux*", if:"[ $(arch) == "x86_64" ]"
+zplug "BurntSushi/xsv", as:command, from:gh-r, use:"*x86_64-unknown-linux*", if:"[[ $(uname -m) == "x86_64" ]]"
