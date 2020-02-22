@@ -1,0 +1,6 @@
+# system monitor
+zplug "cjbassi/gotop", as:command, from:gh-r, use:"*linux_arm8.tgz", if:"[ $(arch) == "aarch64" ]"
+# find alternative
+zplug "sharkdp/fd", as:command, from:gh-r, use:"*aarch64-unknown-linux-musl*", if:"[ $(arch) == "aarch64" ]"
+# cat alternative
+zplug "sharkdp/bat", as:command, from:gh-r, use:"*aarch64*linux-gnu*", if:"[ $(arch) == "aarch64" ]"
