@@ -42,6 +42,7 @@ zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-autosuggestions"
 
 # For node
+export N_PREFIX=$HOME/.local
 zplug "tj/n", use:"bin/n", as:command
 
 # oh-my-zsh features
@@ -131,6 +132,11 @@ fi
 if type cargo >/dev/null 2>&1; then
     export PATH="$HOME/.cargo/bin:$PATH"
 fi
+
+if [[ -d $HOME/.local/bin ]]; then
+    export PATH=$HOME/.local/bin:$PATH
+fi
+
 
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     PROMPT="%{$fg_bold[red]%}(%M) ${PROMPT}"
