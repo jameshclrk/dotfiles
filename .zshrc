@@ -56,8 +56,14 @@ zplug "so-fancy/diff-so-fancy", as:command, use:"third_party/build_fatpack/diff-
 # ping interface
 zplug "denilsonsa/prettyping", as:command, use:"prettyping"
 # Compiled programs
-source $HOME/.zsh_arch_plugins
-
+arch=$(uname -m)
+if [ ${arch} = "x86_64" ]; then
+    source $HOME/.zsh_arch_plugins_x86_64
+elif [ ${arch} = "aarch64" ]; then
+    source $HOME/.zsh_arch_plugins_aarch64
+else
+    echo "Unknown architecture: ${arch}"
+fi
 # Install plugins that are not installed
 if ! zplug check --verbose; then
     zplug install
