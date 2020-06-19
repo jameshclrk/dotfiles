@@ -2,11 +2,23 @@
 set $mod Mod4
 set $term tilix
 set $menu rofi -show drun
+# Shortcuts for laptop
+set $laptop_display eDP-1
+set $laptop_trackpad "1739:30383:DELL07E6:00_06CB:76AF_Touchpad"
+
+# Shortcuts when docking
+set $desktop_display "Dell Inc. DELL U2515H*"
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in __DATADIR__/backgrounds/sway/)
 output * bg /usr/share/backgrounds/f29/default/normalish/f29.png fill
+
+# Display res/pos
+output $laptop_display pos 0 0 res 1920x1080
+output $desktop_display pos 1920 0 res 2560x1440
+
+# Gaps
 default_border pixel 1
 gaps outer 5
 gaps inner 5
@@ -14,14 +26,15 @@ hide_edge_borders smart
 smart_gaps on
 
 ### Input configuration
-input "1739:30383:DELL07E6:00_06CB:76AF_Touchpad" {
+input $laptop_trackpad {
     dwt enabled
     tap enabled
     natural_scroll enabled
     middle_emulation enabled
 }
 
-input "1:1:AT_Translated_Set_2_keyboard" {
+# Use UK ISO layout for keyboard
+input type:keyboard {
     xkb_layout gb
 }
 
@@ -146,5 +159,6 @@ exec_always $HOME/.config/waybar/waybar.sh
 exec mako --default-timeout 10000
 #exec $HOME/.local/bin/redshift -b 1.0:0.75 -t 6500:3000 -m wayland -l 32.7767:-96.7970
 exec redshift -b 1.0:0.75 -t 6500:3000 -m wayland -l 53.4808:-2.2426
+exec kanshi
 
 include /etc/sway/config.d/*

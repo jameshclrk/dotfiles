@@ -1,9 +1,9 @@
 {
     "layer": "top", // Waybar at top layer
-    "height": 23,
+    "height": 25,
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["custom/spotify", "backlight", "pulseaudio", "network", "battery", "clock"],
+    "modules-right": ["idle_inhibitor", "backlight", "pulseaudio", "network", "battery", "clock"],
     "sway/workspaces": {
         "all-outputs": true
     },
@@ -11,16 +11,16 @@
         "max-length": 50
     },
     "idle_inhibitor": {
-        "format": "{status}",
+        "format": "{icon}",
         "format-icons": {
             "activated": "",
             "deactivated": ""
         }
     },
     "backlight": {
-    "device": "intel_backlight",
-    "format": "{percent}% {icon}",
-    "format-icons": ["", ""]
+        "device": "intel_backlight",
+        "format": "{icon} {percent}%",
+        "format-icons": ["", ""]
     },
     "battery": {
         "format": "{icon} {capacity}%",
@@ -28,12 +28,14 @@
         "disable-inotify": true
     },
     "network": {
-        // "interface": "wlp2s0", // (Optional) To force the use of this interface
         "format-wifi": "{icon}",
         "format-icons": ["","",""],
         "format-ethernet": "{ifname} ",
-        "format-disconnected": "",
-        "on-click": "notify-send -t 5000 \"Wi-fi Details:\" \"$(iw dev wlp2s0 link | grep -e \"SSID\\|signal\" )\""
+        "format-disconnected": "X",
+        "tooltip-format": "{ifname}",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+        "tooltip-format-ethernet": "{ifname} ",
+        "tooltip-format-disconnected": "Disconnected"
     },
     "pulseaudio": {
         "format": "{icon} {volume}%",
