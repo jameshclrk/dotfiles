@@ -1,7 +1,7 @@
 # tldr for man pages
 zplug "dbrgn/tealdeer", as:command, from:gh-r, use:"*x86_64*", rename-to:tldr
 # system monitor
-zplug "cjbassi/gotop", as:command, from:gh-r, use:"*linux_amd64.tgz"
+zplug "xxxserxxx/gotop", as:command, from:gh-r, use:"*linux_amd64.tgz"
 # Ultimate Plumber
 zplug "akavel/up", as:command, from:gh-r, use:"*up"
 # ls alternative
