@@ -56,15 +56,25 @@ zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf
 zplug "so-fancy/diff-so-fancy", as:command, use:"third_party/build_fatpack/diff-so-fancy"
 # ping interface
 zplug "denilsonsa/prettyping", as:command, use:"prettyping"
+
 # Compiled programs
 arch=$(uname -m)
-if [ ${arch} = "x86_64" ]; then
-    source $HOME/.zsh_arch_plugins_x86_64
-elif [ ${arch} = "aarch64" ]; then
-    source $HOME/.zsh_arch_plugins_aarch64
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+
+if [ -f $HOME/.zsh_arch_plugins_${machine}_${arch} ]; then
+    source $HOME/.zsh_arch_plugins_${machine}_${arch}
 else
-    echo "Unknown architecture: ${arch}"
+    echo "Unknown machine: ${machine} ${arch}"
 fi
+
+#
 # Install plugins that are not installed
 if ! zplug check --verbose; then
     zplug install
