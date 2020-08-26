@@ -108,6 +108,10 @@ if type fd >/dev/null 2>&1; then
     export FZF_DEFAULT_COMMAND="fd --type f --exclude .git"
 fi
 
+if type ripgrep >/dev/null 2>&1; then
+    alias rg="ripgrep"
+fi
+
 # cdd - cd to selected directory
 cdd() {
     local dir
