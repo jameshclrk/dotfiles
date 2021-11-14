@@ -4,6 +4,7 @@ local cmd, global = vim.cmd, vim.api.nvim_set_var
 vim.g.mapleader = ";"
 vim.g.did_load_filetypes=1
 
+opt.lazyredraw = true
 opt.number = true
 opt.signcolumn = "yes:1"
 opt.hidden = true
@@ -16,6 +17,12 @@ opt.softtabstop = 4
 opt.expandtab = true
 opt.timeoutlen = 500
 
+-- Minimap
+global("minimap_auto_start", 1)
+global("minimap_auto_start_win_enter", 1)
+global("minimap_highlight_range", 1)
+
+-- Dashboard
 global("dashboard_default_executive", "telescope")
 
 if vim.fn.filereadable("~/.config/nvim/header.cat") == 1 then

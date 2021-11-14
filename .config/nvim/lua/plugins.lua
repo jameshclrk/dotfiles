@@ -34,6 +34,10 @@ return require("packer").startup(function()
       }
     end
   }
+  -- Minimap
+  use {
+    "wfxr/minimap.vim",
+  }
   -- Preview Markdown in a browser
   use {
     "iamcco/markdown-preview.nvim",
