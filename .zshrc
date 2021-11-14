@@ -23,117 +23,33 @@ if [[ -f /proc/version ]]; then
     fi
 fi
 
-# Make sure zplug is installed
-if [[ ! -d ~/.zplug ]]; then
-    git clone https://github.com/zplug/zplug ~/.zplug && \
-        source ~/.zplug/init.zsh && \
-        zplug update
-else
-    source ~/.zplug/init.zsh
-fi
-
-## begin zplug ##
-zplug "zplug/zplug"
-# Theme
-zplug 'dracula/zsh', as:theme
-
-zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
-zplug "zsh-users/zsh-autosuggestions"
-
-# For node
-export N_PREFIX=$HOME/.local
-zplug "tj/n", use:"bin/n", as:command
-
-# oh-my-zsh features
-zplug "lib/completion", from:oh-my-zsh
-zplug "lib/key-bindings", from:oh-my-zsh
-
-# scripts
-# cli fuzzy finder
-zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf
-# better diff interface
-zplug "so-fancy/diff-so-fancy", as:command, use:"third_party/build_fatpack/diff-so-fancy"
-# ping interface
-zplug "denilsonsa/prettyping", as:command, use:"prettyping"
-
-# Compiled programs
-arch=$(uname -m)
-unameOut="$(uname -s)"
-case "${unameOut}" in
-    Linux*)     machine=Linux;;
-    Darwin*)    machine=Mac;;
-    CYGWIN*)    machine=Cygwin;;
-    MINGW*)     machine=MinGw;;
-    *)          machine="UNKNOWN:${unameOut}"
-esac
-
-if [ -f $HOME/.zsh_arch_plugins_${machine}_${arch} ]; then
-    source $HOME/.zsh_arch_plugins_${machine}_${arch}
-else
-    echo "Unknown machine: ${machine} ${arch}"
-fi
-
-#
-# Install plugins that are not installed
-if ! zplug check --verbose; then
-    zplug install
-fi
-
-# Then, source plugins and add commands to $PATH
-zplug load
-## end zplug ##
-
-# Misc zsh config
-HISTFILE=~/.zsh_history
-HISTSIZE=2000
-SAVEHIST=$HISTSIZE
-setopt hist_ignore_all_dups
-
-# Highlighting rules
+setopt HIST_IGNORE_ALL_DUPS
+bindkey -e
+setopt CORRECT
+SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+WORDCHARS=${WORDCHARS//[\/]}
+zstyle ':zim:git' aliases-prefix 'g'
+zstyle ':zim:input' double-dot-expand yes
+zstyle ':zim:termtitle' format '%1~'
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE=fg=240
-
-if type exa >/dev/null 2>&1; then
-    alias ls="exa --long --git --group-directories-first"
-else
-    alias ls='ls --color -lh --group-directories-first -N'
-fi
-
-if type bat >/dev/null 2>&1; then
-    alias preview="fd -E 'go' -E 'old_machine' -E .git --type f | fzf --preview 'bat --plain --color=always {}'"
-fi
-
-if type fd >/dev/null 2>&1; then
-    export FZF_DEFAULT_COMMAND="fd --type f --exclude .git"
-fi
-
-if type ripgrep >/dev/null 2>&1; then
-    alias rg="ripgrep"
-fi
-
-# cdd - cd to selected directory
-cdd() {
-    local dir
-    dir=$(find * -maxdepth 0 -type d -print 2> /dev/null | fzf +m) \
-        && cd "$dir"
-}
-
-# cdf - cd into the directory of the selected file
-cdf() {
-    local file
-    local dir
-    file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
-}
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[comment]='fg=240'
 
 # most instead of less
 if type most >/dev/null 2>&1; then
     export MANPAGER="most -s"
 fi
 
-if type vim >/dev/null 2>&1; then
-    # use vim as editior
-    export EDITOR="vim --"
+
+if type nvim >/dev/null 2>&1; then
+    # use nvim as editior
+    export EDITOR="nvim --"
+    alias vim=nvim
+else
+    if type vim >/dev/null 2>&1; then
+        # use vim as editior
+        export EDITOR="vim --"
+    fi
 fi
 
 # Go
@@ -147,28 +63,9 @@ if type cargo >/dev/null 2>&1; then
     export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
+
 if [[ -d $HOME/.local/bin ]]; then
     export PATH=$HOME/.local/bin:$PATH
-fi
-
-
-if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    PROMPT="%{$fg_bold[red]%}(%M) ${PROMPT}"
-fi
-
-autoload -Uz add-zsh-hook
-
-function xterm_title_precmd () {
-	print -Pn '\e]2;%1~\a'
-}
-
-function xterm_title_preexec () {
-	print -Pn "\e]2;${(q)1}\a"
-}
-
-if [[ "$TERM" == (screen*|xterm*|rxvt*) ]]; then
-	add-zsh-hook -Uz precmd xterm_title_precmd
-	add-zsh-hook -Uz preexec xterm_title_preexec
 fi
 
 # Machine specific
@@ -176,3 +73,41 @@ if [ -f ~/.zsh_machine ]; then
     . ~/.zsh_machine
 fi
 
+# ------------------
+# Initialize modules
+# ------------------
+
+if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
+  # Download zimfw script if missing.
+  command mkdir -p ${ZIM_HOME}
+  if (( ${+commands[curl]} )); then
+    command curl -fsSL -o ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+  else
+    command wget -nv -O ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+  fi
+fi
+if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
+  # Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
+  source ${ZIM_HOME}/zimfw.zsh init -q
+fi
+source ${ZIM_HOME}/init.zsh
+
+#
+# zsh-history-substring-search
+#
+
+# Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
+bindkey '^[[A' history-substring-search-up
+bindkey '^[[B' history-substring-search-down
+
+# Bind up and down keys
+zmodload -F zsh/terminfo +p:terminfo
+if [[ -n ${terminfo[kcuu1]} && -n ${terminfo[kcud1]} ]]; then
+  bindkey ${terminfo[kcuu1]} history-substring-search-up
+  bindkey ${terminfo[kcud1]} history-substring-search-down
+fi
+
+bindkey '^P' history-substring-search-up
+bindkey '^N' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down

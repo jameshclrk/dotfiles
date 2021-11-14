@@ -1,0 +1,13 @@
+zmodule environment
+#zmodule jameshclrk/zim-environment
+zmodule git
+zmodule input
+zmodule termtitle
+zmodule utility
+zmodule exa
+zmodule dracula/zsh -n dracula
+zmodule zsh-users/zsh-completions
+zmodule completion
+zmodule zsh-users/zsh-autosuggestions
+zmodule zsh-users/zsh-syntax-highlighting
+zmodule zsh-users/zsh-history-substring-search
