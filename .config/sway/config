@@ -8,6 +8,7 @@ set $laptop_trackpad "1739:30383:DELL07E6:00_06CB:76AF_Touchpad"
 
 # Shortcuts when docking
 set $desktop_display "Dell Inc. DELL U2515H*"
+set $magic_trackpad "76:613:Apple_Inc._Magic_Trackpad_2"
 
 ### Output configuration
 #
@@ -33,10 +34,20 @@ input $laptop_trackpad {
     middle_emulation enabled
 }
 
+input $magic_trackpad {
+    tap enabled
+    natural_scroll enabled
+    middle_emulation enabled
+}
+
 # Use UK ISO layout for keyboard
 input type:keyboard {
     xkb_layout gb
 }
+
+### Window Settings
+for_window [title="Firefox — Sharing Indicator"] floating enable, sticky enable, move position 0 0, resize set 55 29
+for_window [title="Firefox — Sharing Indicator"] no_focus
 
 ### Key binding"
 # Open a terminal
