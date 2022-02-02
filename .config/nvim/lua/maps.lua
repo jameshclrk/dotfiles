@@ -15,6 +15,7 @@ map("n", "<Up>", "gk", {})
 local keymap = {
     ["<TAB>"] = {"<cmd>bnext<cr>", "next buffer"},
     ["<leader>"] = {"<cmd>lua require'custom/telescope'.project_files()<cr>", "find files"},
+    e = {"<cmd>lua vim.diagnostic.open_float()<CR>", "lsp float"},
     c = {"<cmd>lua require 'mdeval'.eval_code_block()<CR>", "eval code block"},
     j = {"<cmd>lua require'hop'.hint_patterns()<cr>", "find pattern and jump"},
     p = {'"+p', "paste from clipboard"},
@@ -27,11 +28,12 @@ local keymap = {
     f = {
         name = "+telescope",
         n = {"<cmd>Telescope resume<cr>", "resume"},
-        f = {"<cmd>lua require'custom/telescope'.project_files()<cr>", "find files"},
+        f = {"<cmd>Telescope frecency<cr>", "find files"},
         b = {"<cmd>Telescope current_buffer_fuzzy_find<cr>", "fuzzy buf search"},
+        i = {"<cmd>Telescope file_browser<cr>", "file browser"},
         t = {"<cmd>Telescope treesitter<cr>", "treesitter"},
         g = {"<cmd>Telescope live_grep<cr>", "grep"},
-        e = {"<cmd>Telescope emoji theme=cursor<cr>", "emoji"},
+        e = {"<cmd>Telescope emoji<cr>", "emoji"},
     },
     g = {
         name = "+git",
@@ -59,12 +61,6 @@ local keymap = {
         b = "blame line",
         S = "stage buffer",
         U = "git reset",
-    },
-    l = {
-        name = "+lsp",
-        -- broken in python D = {'<cmd>lua vim.lsp.buf.declaration()<CR>', "declaration"},
-        F = {"<cmd>lua vim.lsp.buf.formatting()<cr>", "format"},
-        R = {"<cmd>lua vim.lsp.buf.rename()<CR>", "rename"},
     },
 }
 
