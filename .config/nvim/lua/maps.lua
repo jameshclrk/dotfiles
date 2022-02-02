@@ -14,7 +14,8 @@ map("n", "<Up>", "gk", {})
 
 local keymap = {
     ["<TAB>"] = {"<cmd>bnext<cr>", "next buffer"},
-    ["<leader>"] = {"<cmd>lua require'telescope-custom'.project_files()<cr>", "find files"},
+    ["<leader>"] = {"<cmd>lua require'custom/telescope'.project_files()<cr>", "find files"},
+    c = {"<cmd>lua require 'mdeval'.eval_code_block()<CR>", "eval code block"},
     j = {"<cmd>lua require'hop'.hint_patterns()<cr>", "find pattern and jump"},
     p = {'"+p', "paste from clipboard"},
     q = {"<cmd>Bdelete<cr>", "quit with bufdelete"},
@@ -26,7 +27,7 @@ local keymap = {
     f = {
         name = "+telescope",
         n = {"<cmd>Telescope resume<cr>", "resume"},
-        f = {"<cmd>lua require'telescope-custom'.project_files()<cr>", "find files"},
+        f = {"<cmd>lua require'custom/telescope'.project_files()<cr>", "find files"},
         b = {"<cmd>Telescope current_buffer_fuzzy_find<cr>", "fuzzy buf search"},
         t = {"<cmd>Telescope treesitter<cr>", "treesitter"},
         g = {"<cmd>Telescope live_grep<cr>", "grep"},
@@ -37,12 +38,12 @@ local keymap = {
         n = {"<cmd>Telescope resume<cr>", "resume"},
         h = {
             name = "+github",
-            p = {"<cmd>Telescope gh pull_request<cr>", "pull requests"},
-            i = {"<cmd>Telescope gh issues<cr>", "issues"},
+            p = {"<cmd>Octo pr list<cr>", "pull requests"},
+            i = {"<cmd>Octo issue list<cr>", "issues"},
             m = {
                 name = "+my",
-                p = {"<cmd>Telescope gh pull_request author='@me'<cr>", "my pull requests"},
-                i = {"<cmd>Telescope gh issues author='@me'<cr>", "my issues"},   
+                p = {"<cmd>lua require'custom/octo'.my_prs()<cr>", "my pull requests"},
+                i = {"<cmd>Octo issue list createdBy='@me'<cr>", "my issues"},   
             },
         },
         g = {"<cmd>Telescope git_bcommits<cr>", "buf git commits"},

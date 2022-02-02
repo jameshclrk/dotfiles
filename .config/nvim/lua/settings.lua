@@ -1,6 +1,7 @@
 local opt = vim.opt
 local cmd, global = vim.cmd, vim.api.nvim_set_var
 
+
 vim.g.mapleader = ";"
 vim.g.did_load_filetypes=1
 
@@ -16,6 +17,12 @@ opt.shiftwidth = 4
 opt.softtabstop = 4
 opt.expandtab = true
 opt.timeoutlen = 500
+opt.scrolloff = 8
+opt.sidescrolloff = 8
+opt.foldlevel=20
+
+global("markdown_fenced_languages", {"html", "python", "javascript", "js=javascript"})
+global("markdown_folding", 1)
 
 -- Minimap
 global("minimap_auto_start", 1)
@@ -24,13 +31,6 @@ global("minimap_highlight_range", 1)
 
 -- Dashboard
 global("dashboard_default_executive", "telescope")
-
-if vim.fn.filereadable("~/.config/nvim/header.cat") == 1 then
-    global("dashboard_preview_command", "cat")
-    global("dashboard_preview_file", "~/.config/nvim/header.cat")
-    global("dashboard_preview_file_height", 34)
-    global("dashboard_preview_file_width", 62)
-end
 
 global("dashboard_custom_section", {
     a = {
@@ -52,25 +52,4 @@ global("dashboard_custom_section", {
 })
 
 cmd("colorscheme tokyonight")
-
-local disabled_built_ins = {
-    "gzip",
-    "zip",
-    "zipPlugin",
-    "tar",
-    "tarPlugin",
-    "getscript",
-    "getscriptPlugin",
-    "vimball",
-    "vimballPlugin",
-    "2html_plugin",
-    "logipat",
-    "rrhelper",
-    "spellfile_plugin",
-    "matchit"
-}
-
-for _, plugin in pairs(disabled_built_ins) do
-    vim.g["loaded_" .. plugin] = 1
-end
 
