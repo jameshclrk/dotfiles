@@ -7,6 +7,10 @@ function get_config(name)
   return string.format("require(\"config/%s\")", name)
 end
 
+function get_lsp_config(name)
+  return string.format("require(\"config/lsp\").%s()", name)
+end
+
 pcall(require, "packer_compiled")
 
 return require("packer").startup({function()
@@ -67,7 +71,7 @@ return require("packer").startup({function()
   -- lsp
   use {
     "neovim/nvim-lspconfig",
-    config = get_config("lspconfig"),
+    config = get_lsp_config("lspconfig"),
     requires = {"hrsh7th/cmp-nvim-lsp"}
   }
   use {
@@ -79,6 +83,10 @@ return require("packer").startup({function()
       {"hrsh7th/cmp-nvim-lsp-document-symbol"},
       {"onsails/lspkind-nvim"},
     },
+  }
+  use {
+    "jose-elias-alvarez/null-ls.nvim",
+    config = get_lsp_config("null_ls"),
   }
   -- treesitter
   use {
