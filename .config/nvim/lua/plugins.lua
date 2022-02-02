@@ -24,12 +24,13 @@ return require("packer").startup({function()
   -- File closer helper
   use "famiu/bufdelete.nvim"
   -- The Pope
-  use "tpope/vim-markdown"
-  use "tpope/vim-commentary"
+  use {
+    "tpope/vim-commentary",
+    opt = true,
+    keys = "gc",
+  }
   -- Themes
-  use "Mofiqul/dracula.nvim"
   use "folke/tokyonight.nvim"
-  
 
   ----- Config
   -- Dashboard
@@ -51,6 +52,7 @@ return require("packer").startup({function()
   use {
     "j-hui/fidget.nvim",
     config = get_config("fidget"),
+    event = "BufEnter",
   }
 
   -- Key helper
@@ -133,7 +135,7 @@ return require("packer").startup({function()
   -- Buffers as tabs
   use {
     "noib3/cokeline.nvim",
-    requires = "kyazdani42/nvim-web-devicons",
+    requires = {"kyazdani42/nvim-web-devicons", opt = true},
     config = get_config("cokeline"),
   }
   -- Telescope
@@ -143,23 +145,26 @@ return require("packer").startup({function()
     requires = {
       {"nvim-lua/plenary.nvim"},
       {"nvim-telescope/telescope-fzf-native.nvim", run = "make"},
+      {"nvim-telescope/telescope-file-browser.nvim"},
       {"xiyaowong/telescope-emoji.nvim"},
+      {"nvim-telescope/telescope-frecency.nvim", requires = {"tami5/sqlite.lua"}},
     },
-    opt = true,
-    cmd = {"Telescope"},
+    cmd = "Telescope",
+    module = "telescope",
   }
   use {
     "pwntester/octo.nvim",
     config = get_config("octo"),
     requires = {
       {"nvim-telescope/telescope.nvim"},
-      {"kyazdani42/nvim-web-devicons"},
+      {"kyazdani42/nvim-web-devicons", opt = True},
     },
+    opt = true,
   }
   use {
     "jubnzv/mdeval.nvim",
     config = get_config("mdeval"),
-    opt = true
+    opt = true,
   }
 end,
 config = {
