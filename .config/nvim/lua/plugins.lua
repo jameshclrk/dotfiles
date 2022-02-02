@@ -38,6 +38,10 @@ return require("packer").startup({function()
     requires = { "kyazdani42/nvim-web-devicons" },
     config = get_config("alpha"),
   }
+  use {
+    "petertriho/nvim-scrollbar",
+    config = get_config("scrollbar"),
+  }
   -- indent lines
   use {
     "lukas-reineke/indent-blankline.nvim",
