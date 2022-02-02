@@ -1,3 +1,5 @@
+-- starts loading init.lua
+vim.opt.shadafile = "NONE"
 pcall(require, "impatient")
 -- require'impatient'.enable_profile()
 
@@ -37,3 +39,4 @@ for i = 1, #modules, 1 do
    pcall(require, modules[i])
 end
 
+vim.opt.shadafile = ""
