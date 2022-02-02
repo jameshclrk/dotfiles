@@ -6,6 +6,7 @@ vim.g.mapleader = ";"
 vim.g.did_load_filetypes=1
 
 opt.lazyredraw = true
+opt.shell = "/bin/bash"
 opt.number = true
 opt.signcolumn = "yes:1"
 opt.hidden = true
