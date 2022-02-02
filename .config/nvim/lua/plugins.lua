@@ -21,8 +21,6 @@ return require("packer").startup({function()
   use "lewis6991/impatient.nvim"
   -- filetypes
   use "nathom/filetype.nvim"
-  -- Dashboard
-  use "glepnir/dashboard-nvim"
   -- File closer helper
   use "famiu/bufdelete.nvim"
   -- The Pope
@@ -34,6 +32,12 @@ return require("packer").startup({function()
   
 
   ----- Config
+  -- Dashboard
+  use {
+    "goolord/alpha-nvim",
+    requires = { "kyazdani42/nvim-web-devicons" },
+    config = get_config("alpha"),
+  }
   -- indent lines
   use {
     "lukas-reineke/indent-blankline.nvim",

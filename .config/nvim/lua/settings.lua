@@ -24,32 +24,5 @@ opt.foldlevel=20
 global("markdown_fenced_languages", {"html", "python", "javascript", "js=javascript"})
 global("markdown_folding", 1)
 
--- Minimap
-global("minimap_auto_start", 1)
-global("minimap_auto_start_win_enter", 1)
-global("minimap_highlight_range", 1)
-
--- Dashboard
-global("dashboard_default_executive", "telescope")
-
-global("dashboard_custom_section", {
-    a = {
-        description = {"ﭯ  Recently Opened Files"},
-        command = "DashboardFindHistory",
-    },
-    b = {
-        description = {"  Find Files           "},
-        command = "DashboardFindFile",
-    },
-    c = {
-        description = {"  New File             "},
-        command = "DashboardNewFile",
-    },
-    d = {
-        description = {"  Settings             "},
-        command = "Telescope find_files cwd=~/.config/nvim",
-    },
-})
-
 cmd("colorscheme tokyonight")
 
