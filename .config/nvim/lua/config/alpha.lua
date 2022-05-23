@@ -3,23 +3,23 @@ local dashboard = require("alpha.themes.dashboard")
 
 -- Set header
 dashboard.section.header.val = {
-    "                                                     ",
-    "  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
-    "  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
-    "  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
-    "  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
-    "  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
-    "  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
-    "                                                     ",
+	"                                                     ",
+	"  ███╗   ██╗███████╗ ██████╗ ██╗   ██╗██╗███╗   ███╗ ",
+	"  ████╗  ██║██╔════╝██╔═══██╗██║   ██║██║████╗ ████║ ",
+	"  ██╔██╗ ██║█████╗  ██║   ██║██║   ██║██║██╔████╔██║ ",
+	"  ██║╚██╗██║██╔══╝  ██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ ",
+	"  ██║ ╚████║███████╗╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║ ",
+	"  ╚═╝  ╚═══╝╚══════╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝ ",
+	"                                                     ",
 }
 
 -- Set menu
 dashboard.section.buttons.val = {
-    dashboard.button( "p", "  > Recent Projects", "<cmd>Telescope projects<cr>"),
-    dashboard.button( "o", "ﭯ  > Frequently Opened Files", "<cmd>Telescope frecency<cr>"),
-    dashboard.button( "f", "  > Find Files", "<cmd>Telescope find_files<cr>"),
-    dashboard.button( "s", "  > Settings", "<cmd>Telescope find_files cwd=~/.config/nvim<cr>"),
-    dashboard.button( "q", "  > Quit NVIM", ":qa<CR>"),
+	dashboard.button("p", "  > Recent Projects", "<cmd>Telescope projects<cr>"),
+	dashboard.button("o", "ﭯ  > Frequently Opened Files", "<cmd>Telescope frecency<cr>"),
+	dashboard.button("f", "  > Find Files", "<cmd>Telescope find_files<cr>"),
+	dashboard.button("s", "  > Settings", "<cmd>Telescope find_files cwd=~/.config/nvim<cr>"),
+	dashboard.button("q", "  > Quit NVIM", ":qa<CR>"),
 }
 
 -- Set footer
@@ -35,7 +35,7 @@ dashboard.section.buttons.val = {
 --       }
 --   end)
 --   ```
-local fortune = require("alpha.fortune") 
+local fortune = require("alpha.fortune")
 dashboard.section.footer.val = fortune()
 
 -- Send config to alpha
