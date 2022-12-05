@@ -55,7 +55,11 @@ fi
 # Go
 if [[ -d /usr/local/go ]]; then
     export PATH=/usr/local/go/bin:$PATH
-    export PATH=$HOME/go/bin:$PATH
+fi
+
+if type go >/dev/null 2>&1; then
+    export PATH="$HOME/go/bin:$PATH"
+    export GOPROXY=direct
 fi
 
 # Cargo
@@ -72,6 +76,15 @@ fi
 if [ -f ~/.zsh_machine ]; then
     . ~/.zsh_machine
 fi
+
+if type brew &>/dev/null; then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
+
+if type thefuck &>/dev/null; then
+    eval $(thefuck --alias huh)
+fi
+
 
 # ------------------
 # Initialize modules

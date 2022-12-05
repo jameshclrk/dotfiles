@@ -5,7 +5,7 @@ zmodule input
 zmodule termtitle
 zmodule utility
 zmodule exa
-zmodule dracula/zsh -n dracula
+zmodule dracula/zsh -n dracula -z
 zmodule zsh-users/zsh-completions
 zmodule completion
 zmodule zsh-users/zsh-autosuggestions
