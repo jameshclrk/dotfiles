@@ -85,6 +85,7 @@ if type thefuck &>/dev/null; then
     eval $(thefuck --alias huh)
 fi
 
+fpath+=~/.zfunc
 
 # ------------------
 # Initialize modules
@@ -124,3 +125,5 @@ bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
+
+export PATH="$HOME/.poetry/bin:$PATH"

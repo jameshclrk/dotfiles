@@ -34,4 +34,6 @@ return {
 		{ key = "LeftArrow", mods = "SUPER", action = wezterm.action({ SendString = "\x1bOH" }) },
 		{ key = "RightArrow", mods = "SUPER", action = wezterm.action({ SendString = "\x1bOF" }) },
 	},
+  window_background_opacity = 0.75,
+  macos_window_background_blur = 20,
 }
