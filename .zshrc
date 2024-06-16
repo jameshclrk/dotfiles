@@ -1,45 +1,40 @@
-# If tbsm is installed, launch a wayland session of sway
-if type tbsm > /dev/null 2>&1; then
-    if [[ $XDG_VTNR -le 2 ]]; then
-        if [[ ! $XDG_SESSION_TYPE == "wayland" ]]; then
-            tbsm 1
-            exit
-        fi
-    fi
-fi
+#
+# User configuration sourced by interactive shells
+#
 
-# Windows BS
-if [[ -f /proc/version ]]; then
-    if grep --quiet Microsoft /proc/version; then
-        # From agross/dotfiles@83b572
-        if [[ "$(umask)" == '000' ]]; then
-            umask 022
-        fi
-        # If using Windows and Docker is installed in WSL:
-        # tell Docker that the host is a TCP port (to Windows) :)
-        if type docker >/dev/null 2>&1; then
-            export DOCKER_HOST=tcp://localhost:2375
-        fi
-    fi
-fi
+# -----------------
+# Zsh configuration
+# -----------------
 
+# Remove older command from the history if a duplicate is to be added.
 setopt HIST_IGNORE_ALL_DUPS
+
+# Set editor default keymap to emacs (`-e`) or vi (`-v`)
 bindkey -e
-setopt CORRECT
-SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+
+# Remove path separator from WORDCHARS.
 WORDCHARS=${WORDCHARS//[\/]}
-zstyle ':zim:git' aliases-prefix 'g'
+
+# Append `../` to your input for each `.` you type after an initial `..`
 zstyle ':zim:input' double-dot-expand yes
+
+# Set a custom terminal title format using prompt expansion escape sequences.
+# See http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Simple-Prompt-Escapes
+# If none is provided, the default '%n@%m: %~' is used.
 zstyle ':zim:termtitle' format '%1~'
+
+# Disable automatic widget re-binding on each precmd. This can be set when
+# zsh-users/zsh-autosuggestions is the last module in your ~/.zimrc.
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+
+# Set what highlighters will be used.
+# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
+# Customize the main highlighter styles.
+# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md#how-to-tweak-it
 typeset -A ZSH_HIGHLIGHT_STYLES
-ZSH_HIGHLIGHT_STYLES[comment]='fg=240'
-
-# most instead of less
-if type most >/dev/null 2>&1; then
-    export MANPAGER="most -s"
-fi
-
+ZSH_HIGHLIGHT_STYLES[comment]='fg=242'
 
 if type nvim >/dev/null 2>&1; then
     # use nvim as editior
@@ -52,78 +47,65 @@ else
     fi
 fi
 
-# Go
-if [[ -d /usr/local/go ]]; then
-    export PATH=/usr/local/go/bin:$PATH
-fi
-
-if type go >/dev/null 2>&1; then
-    export PATH="$HOME/go/bin:$PATH"
-    export GOPROXY=direct
-fi
-
-# Cargo
-if type cargo >/dev/null 2>&1; then
-    export PATH="$HOME/.cargo/bin:$PATH"
-fi
-
-
-if [[ -d $HOME/.local/bin ]]; then
-    export PATH=$HOME/.local/bin:$PATH
-fi
-
-# Machine specific
-if [ -f ~/.zsh_machine ]; then
-    . ~/.zsh_machine
-fi
-
-if type brew &>/dev/null; then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-fi
-
-if type thefuck &>/dev/null; then
-    eval $(thefuck --alias huh)
-fi
-
-fpath+=~/.zfunc
-
 # ------------------
 # Initialize modules
 # ------------------
 
+ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
+# Download zimfw plugin manager if missing.
 if [[ ! -e ${ZIM_HOME}/zimfw.zsh ]]; then
-  # Download zimfw script if missing.
-  command mkdir -p ${ZIM_HOME}
   if (( ${+commands[curl]} )); then
-    command curl -fsSL -o ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+    curl -fsSL --create-dirs -o ${ZIM_HOME}/zimfw.zsh \
+        https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
   else
-    command wget -nv -O ${ZIM_HOME}/zimfw.zsh https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+    mkdir -p ${ZIM_HOME} && wget -nv -O ${ZIM_HOME}/zimfw.zsh \
+        https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
   fi
 fi
+# Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
 if [[ ! ${ZIM_HOME}/init.zsh -nt ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
-  # Install missing modules, and update ${ZIM_HOME}/init.zsh if missing or outdated.
   source ${ZIM_HOME}/zimfw.zsh init -q
 fi
+# Initialize modules.
 source ${ZIM_HOME}/init.zsh
+
+# ------------------------------
+# Post-init module configuration
+# ------------------------------
+
+#
+# oh-my-posh
+#
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
+  eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/config.toml)"
+fi
 
 #
 # zsh-history-substring-search
 #
 
-# Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-
-# Bind up and down keys
 zmodload -F zsh/terminfo +p:terminfo
-if [[ -n ${terminfo[kcuu1]} && -n ${terminfo[kcud1]} ]]; then
-  bindkey ${terminfo[kcuu1]} history-substring-search-up
-  bindkey ${terminfo[kcud1]} history-substring-search-down
-fi
+# Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
+for key ('^[[A' '^P' ${terminfo[kcuu1]}) bindkey ${key} history-substring-search-up
+for key ('^[[B' '^N' ${terminfo[kcud1]}) bindkey ${key} history-substring-search-down
+for key ('k') bindkey -M vicmd ${key} history-substring-search-up
+for key ('j') bindkey -M vicmd ${key} history-substring-search-down
+unset key
 
-bindkey '^P' history-substring-search-up
-bindkey '^N' history-substring-search-down
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-
-export PATH="$HOME/.poetry/bin:$PATH"
+#
+# fzf-tab
+#
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences here, fzf-tab will ignore them
+zstyle -d ':completion:*' format
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+# switch group using `<` and `>`
+zstyle ':fzf-tab:*' switch-group '<' '>'
