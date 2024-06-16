@@ -7,6 +7,8 @@
 # Modules
 #
 
+# Sets up mise-en-place
+zmodule joke/zim-mise
 # Sets sane Zsh built-in environment options.
 zmodule environment
 # Provides handy git aliases and functions.
