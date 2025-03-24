@@ -76,6 +76,6 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
 c-success = "green"
 c-failure = "red"
 c-primary = "blue"
-c-faded = "grey"
+c-faded = "darkGray"
 c-highlight = "yellow"
 c-background = "transparent"
