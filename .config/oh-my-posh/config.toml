@@ -11,8 +11,9 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
 
   [[blocks.segments]]
     type = 'path'
-    background = 'transparent'
-    foreground = 'blue'
+    background = 'p:c-background'
+    foreground = 'p:c-primary'
+    template = "{{ .Path }}"
 
     [blocks.segments.properties]
       style = 'letter'
@@ -20,8 +21,8 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
   [[blocks.segments]]
     type = 'git'
     style = 'plain'
-    foreground = 'grey'
-    background = 'transparent'
+    foreground = 'p:c-faded'
+    background = 'p:c-background'
     template = ' {{ .HEAD }}{{ if or (.Working.Changed) (.Staging.Changed) }}*{{ end }} <cyan>{{ if gt .Behind 0 }}⇣{{ end }}{{ if gt .Ahead 0 }}⇡{{ end }}</>'
 
     [blocks.segments.properties]
@@ -36,8 +37,8 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
   [[blocks.segments]]
     type = 'executiontime'
     style = 'plain'
-    foreground = 'yellow'
-    background = 'transparent'
+    foreground = 'p:c-highlight'
+    background = 'p:c-background'
     template = '{{ .FormattedMs }}'
 
     [blocks.segments.properties]
@@ -52,22 +53,29 @@ console_title_template = '{{ .Shell }} in {{ .Folder }}'
     type = 'text'
     style = 'plain'
     foreground_templates = [
-      "{{if gt .Code 0}}red{{end}}",
-      "{{if eq .Code 0}}green{{end}}",
+      "{{if gt .Code 0}}p:c-failure{{end}}",
+      "{{if eq .Code 0}}p:c-success{{end}}",
     ]
-    background = 'transparent'
+    background = 'p:c-background'
     template = '➜'
 
 [transient_prompt]
   foreground_templates = [
-    "{{if ne .Code 0}}red{{end}}",
-    "{{if eq .Code 0}}green{{end}}",
+    "{{if ne .Code 0}}p:c-failure{{end}}",
+    "{{if eq .Code 0}}p:c-success{{end}}",
   ]
-  background = 'transparent'
-  template = '➜ '
+  background = 'p:c-background'
+  template = '<p:c-primary>{{ .Segments.Path.Path }}</> ➜ '
 
 [secondary_prompt]
-  foreground = 'yellow'
-  background = 'transparent'
-  template = '➜➜ '
+  foreground = 'p:c-highlight'
+  background = 'p:c-background'
+  template = '... '
 
+[palette]
+c-success = "green"
+c-failure = "red"
+c-primary = "blue"
+c-faded = "grey"
+c-highlight = "yellow"
+c-background = "transparent"
