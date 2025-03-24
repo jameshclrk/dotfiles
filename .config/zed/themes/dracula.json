@@ -387,7 +387,7 @@
         "terminal.ansi.bright_cyan": "#A4FFFFff",
         "terminal.ansi.dim_cyan": "#6fbacaff",
         "terminal.ansi.white": "#f8f8f2ff",
-        "terminal.ansi.bright_white": "ffffffff",
+        "terminal.ansi.bright_white": "#ffffffff",
         "terminal.ansi.dim_white": "#c6c6c2ff"
       }
     }
